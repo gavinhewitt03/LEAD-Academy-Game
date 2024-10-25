@@ -1,7 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://bpohvksbkuql3"]
+[gd_scene load_steps=22 format=3 uid="uid://bpohvksbkuql3"]
 
 [ext_resource type="Texture2D" uid="uid://c5g04utwifm30" path="res://art/sprites/characters/slime.png" id="1_crohg"]
-[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_xh0kq"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_xh0kq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_508pg"]
 atlas = ExtResource("1_crohg")
@@ -132,6 +132,9 @@ radius = 41.0122
 [sub_resource type="CircleShape2D" id="CircleShape2D_haqkj"]
 radius = 5.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_y3ghr"]
+radius = 11.0
+
 [node name="enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 3
@@ -155,5 +158,17 @@ position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_haqkj")
 debug_color = Color(0.652077, 0.369282, 0.920032, 0.42)
 
+[node name="enemy_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_y3ghr")
+debug_color = Color(0.501034, 0.580172, 0.0719084, 0.42)
+
+[node name="damage_cooldown" type="Timer" parent="."]
+
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_entered"]
+[connection signal="body_exited" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_exited"]
+[connection signal="timeout" from="damage_cooldown" to="." method="_on_damage_cooldown_timeout"]
