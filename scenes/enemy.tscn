@@ -81,7 +81,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yvjb4")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -133,16 +133,16 @@ radius = 41.0122
 radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y3ghr"]
-radius = 11.0
+radius = 12.0
 
 [node name="enemy" type="CharacterBody2D"]
-collision_layer = 2
+collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_xh0kq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jeo1i")
-animation = &"idle"
+animation = &"death"
 offset = Vector2(0, -6)
 
 [node name="detection_area" type="Area2D" parent="."]
@@ -159,13 +159,24 @@ shape = SubResource("CircleShape2D_haqkj")
 debug_color = Color(0.652077, 0.369282, 0.920032, 0.42)
 
 [node name="enemy_hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
-position = Vector2(0, -3)
+position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_y3ghr")
 debug_color = Color(0.501034, 0.580172, 0.0719084, 0.42)
 
 [node name="damage_cooldown" type="Timer" parent="."]
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0, 1, 0, 1)
+offset_left = -6.0
+offset_top = 3.0
+offset_right = 114.0
+offset_bottom = 30.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

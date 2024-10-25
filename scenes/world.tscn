@@ -103,7 +103,7 @@ layer_2/tile_data = PackedInt32Array(2, 655362, 7, 262150, 655362, 7, 262163, 65
 position = Vector2(155, 108)
 
 [node name="enemy" parent="." instance=ExtResource("5_7gxc7")]
-position = Vector2(260, 116)
+position = Vector2(242, 168)
 
 [node name="collisions" type="StaticBody2D" parent="."]
 
@@ -115,6 +115,12 @@ polygon = PackedVector2Array(11, 0, 175, 0, 175, -34, 219, -34, 219, 0, 415, 0, 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cliff_side_area"]
 position = Vector2(197, -17)
 shape = SubResource("RectangleShape2D_40ryp")
+
+[node name="enemy2" parent="." instance=ExtResource("5_7gxc7")]
+position = Vector2(46, 35)
+
+[node name="enemy3" parent="." instance=ExtResource("5_7gxc7")]
+position = Vector2(354, 71)
 
 [connection signal="body_entered" from="cliff_side_area" to="." method="_on_cliff_side_area_body_entered"]
 [connection signal="body_exited" from="cliff_side_area" to="." method="_on_cliff_side_area_body_exited"]

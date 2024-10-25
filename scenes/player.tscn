@@ -282,7 +282,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wbq6t")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -417,19 +417,17 @@ animations = [{
 radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fabi8"]
-radius = 13.0
+radius = 14.0
 
 [node name="player" type="CharacterBody2D"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_haf4o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -2)
 sprite_frames = SubResource("SpriteFrames_yn1xn")
-animation = &"side_idle"
-frame = 3
-frame_progress = 0.486107
+animation = &"death"
 offset = Vector2(0, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -439,6 +437,8 @@ shape = SubResource("CircleShape2D_v7375")
 debug_color = Color(0.180418, 0.568179, 0.810704, 0.42)
 
 [node name="player_hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
 position = Vector2(-1, -8)
@@ -472,7 +472,25 @@ limit_top = 1
 limit_right = 260
 limit_bottom = 1
 
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0, 1, 0, 1)
+offset_left = -6.75
+offset_top = 3.0
+offset_right = 123.25
+offset_bottom = 30.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
+
+[node name="regen_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="respawn_timer" type="Timer" parent="."]
+wait_time = 5.0
+
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
-[connection signal="timeout" from="damage_cooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="damage_cooldown" to="." method="_on_damage_cooldown_timeout"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="regen_timer" to="." method="_on_regen_timer_timeout"]
+[connection signal="timeout" from="respawn_timer" to="." method="_on_respawn_timer_timeout"]
