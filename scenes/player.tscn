@@ -451,6 +451,27 @@ wait_time = 0.5
 [node name="attack_cooldown" type="Timer" parent="."]
 wait_time = 0.5
 
+[node name="world_camera" type="Camera2D" parent="."]
+position = Vector2(91, 38)
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 415
+limit_bottom = 191
+limit_smoothed = true
+rotation_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_limits = true
+
+[node name="cliffside_camera" type="Camera2D" parent="."]
+position = Vector2(82, 46)
+zoom = Vector2(4, 4)
+limit_left = -80
+limit_top = 1
+limit_right = 260
+limit_bottom = 1
+
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
 [connection signal="timeout" from="damage_cooldown" to="." method="_on_attack_cooldown_timeout"]

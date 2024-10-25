@@ -125,3 +125,14 @@ func _on_attack_cooldown_timeout():
 	$attack_cooldown.stop()
 	global.player_current_attack = false
 	attack_in_progress = false
+
+func current_camera():
+	if global.current_scene == "world":
+		$world_camera.enabled = true
+		$cliffside_camera.enabled = false
+	else:
+		$world_camera.enabled = false
+		$cliffside_camera.enabled = true
+
+func player():
+	pass

@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://c21k4bmu1aqsm"]
+[gd_scene load_steps=12 format=3 uid="uid://c21k4bmu1aqsm"]
 
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_e2nvs"]
 [ext_resource type="Texture2D" uid="uid://ft1kxc38xexg" path="res://art/sprites/tilesets/plains.png" id="1_rywsl"]
 [ext_resource type="Texture2D" uid="uid://b1dgxyjnntswv" path="res://art/sprites/tilesets/grass.png" id="2_rtc3x"]
 [ext_resource type="Texture2D" uid="uid://oiy0ir2fmoge" path="res://art/sprites/objects/objects.png" id="3_qbs1t"]
@@ -78,8 +79,12 @@ sources/0 = SubResource("TileSetAtlasSource_a6nv1")
 sources/1 = SubResource("TileSetAtlasSource_g1yc7")
 sources/2 = SubResource("TileSetAtlasSource_ckl2d")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40ryp"]
+size = Vector2(44, 34)
+
 [node name="world" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_e2nvs")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -95,6 +100,21 @@ layer_2/y_sort_enabled = true
 layer_2/tile_data = PackedInt32Array(2, 655362, 7, 262150, 655362, 7, 262163, 655362, 7, 24, 655362, 7, 655368, 655362, 7, 9, 2, 5, 262161, 2, 5, 589825, 2, 5, 131077, 524290, 6, 6, 524290, 6, 589829, 524290, 6, 655376, 524290, 6, 131094, 524290, 6, 524311, 524290, 6, 19, 393218, 7, 589836, 393218, 7, 655381, 393218, 7, 65549, 524290, 6, 196633, 2, 1, 65559, 2, 1, 196616, 2, 1, 720900, 2, 1, 720915, 2, 1, 131083, 327682, 0, 196620, 2, 0, 655371, 327682, 0)
 
 [node name="player" parent="." instance=ExtResource("4_vnipw")]
+position = Vector2(155, 108)
 
 [node name="enemy" parent="." instance=ExtResource("5_7gxc7")]
 position = Vector2(260, 116)
+
+[node name="collisions" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collisions"]
+polygon = PackedVector2Array(11, 0, 175, 0, 175, -34, 219, -34, 219, 0, 415, 0, 416, 191, 0, 191, 0, 0, 7, 0, 7, -11, -9, -11, -9, 198, 426, 198, 425, -9, 227, -9, 227, -41, 167, -41, 167, -9, 11, -9)
+
+[node name="cliff_side_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cliff_side_area"]
+position = Vector2(197, -17)
+shape = SubResource("RectangleShape2D_40ryp")
+
+[connection signal="body_entered" from="cliff_side_area" to="." method="_on_cliff_side_area_body_entered"]
+[connection signal="body_exited" from="cliff_side_area" to="." method="_on_cliff_side_area_body_exited"]
